@@ -55,3 +55,28 @@ document
   .addEventListener("change", saveSettings);
 // Load settings when the script is loaded
 loadSettings();
+
+document.getElementById("locked-in").addEventListener("change", function () {
+  const lockedIn = this.checked;
+  const checkboxes = document.querySelectorAll(
+    '.setting input[type="checkbox"]'
+  );
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = lockedIn;
+  });
+
+  if (lockedIn) {
+    // Perform the dramatic display
+    const display = document.getElementById("locked-in-display");
+    display.style.display = "block";
+    display.textContent = "LOCKED IN";
+
+    // Start the animation, then hide after a few seconds
+    setTimeout(() => {
+      display.style.display = "none";
+    }, 2000); // Adjust time as needed
+  }
+
+  // Trigger the save settings function or logic here if needed
+});

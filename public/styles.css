@@ -22,12 +22,10 @@ html {
   color: var(--accent-color);
   text-align: center;
   font-family: Lato, Arial, Helvetica Neue, Helvetica, sans-serif;
-
 }
 .popup-header {
   color: var(--accent-color);
   font-family: Lato, Arial, Helvetica Neue, Helvetica, sans-serif;
-
 }
 
 .analysis-result,
@@ -46,7 +44,7 @@ html {
 .setting {
   display: flex;
   align-items: center;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
   font-family: Lato, Arial, Helvetica Neue, Helvetica, sans-serif;
   /* Space between settings */
 }
@@ -65,7 +63,6 @@ html {
   height: 20px; /* Height of checkbox */
   font-family: Lato, Arial, Helvetica Neue, Helvetica, sans-serif;
   border-radius: 50%;
-
 }
 /* Checked style */
 .setting input[type="checkbox"]:checked {
@@ -86,4 +83,32 @@ button {
 }
 button:hover {
   background-color: #1669d8; /* Darker blue on hover */
+}
+
+.locked-in-display {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: url("https://media.tenor.com/cnDGK55cZwAAAAAj/the-first-guardian-explosion-the-first-guardian.gif")
+    center/cover no-repeat;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  line-height: 200px;
+  color: white;
+  font-size: 2em;
+  animation: dramaticEntry 0.5s ease-out forwards;
+}
+
+@keyframes dramaticEntry {
+  from {
+    opacity: 0;
+    transform: scale(0.5) translate(-50%, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%);
+  }
 }
