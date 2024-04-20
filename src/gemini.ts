@@ -55,8 +55,11 @@ const ASK_FOR_OUTPUT = `Based on the information you have, answer the following 
 
     + `Write the word SPLIT on this line. Answer the following questions\n`
     + `Write short summary of the video\n`
+    + `Write the word GENERATIVE on this line\n`
     + `Write a new title you suggest for the video\n`
+    + `Write the word GENERATIVE on this line\n`
     + `Write the topics covered that are required to understand the video\n`
+    + `Write the word GENERATIVE on this line\n`
     + `Write a topic phrase in less than four words\n`;
 const analyze_video = async (data: VideoData): Promise<GeminiAnalysis> => {
     const model = make_model();
@@ -71,6 +74,7 @@ const analyze_video = async (data: VideoData): Promise<GeminiAnalysis> => {
     const output = (await chat.sendMessage(ASK_FOR_OUTPUT)).response.text();
     console.log("Gemini's analysis:\n"+output);
     const areas = output.split("SPLIT").map(area=>area.split("\n").map(line=>line.trim()).filter(line=>line.length!=0));
+    const sentences = output.split("SPLIT")[2].split("GENERATIVE").map(response=>response.trim()).filter(line=>line.length!=0);
     return {
         numerics: {
             informativeness: Number(areas[0][0]),
@@ -85,10 +89,10 @@ const analyze_video = async (data: VideoData): Promise<GeminiAnalysis> => {
             subject_matter: areas[1][1],
         },
         sentences: {
-            summary: areas[2][0],
-            suggested_title: areas[2][1],
-            topics_covered: areas[2][2],
-            topic_phrase: areas[2][3]
+            summary: sentences[0],
+            suggested_title: sentences[1],
+            topics_covered: sentences[2],
+            topic_phrase: sentences[3],
         },
     };
 }
