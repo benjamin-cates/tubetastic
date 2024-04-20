@@ -1,6 +1,6 @@
-# YT-Extention!
+# YT-Extention
 
-## To-Do:
+## To-Do
 
 - [X] Make a ReadMe
 - [ ] Get everyone connected to the Extention
