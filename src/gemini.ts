@@ -1,10 +1,10 @@
-import { GenerativeModel, GoogleGenerativeAI, Content, StartChatParams } from "@google/generative-ai";
-import API_KEY from "./api_key";
+import { GenerativeModel, GoogleGenerativeAI, Content } from "@google/generative-ai";
 import VideoData from "./video_data";
+import { get_storage } from "./worker_comms";
 
 
-const make_model = (): GenerativeModel => {
-    return new GoogleGenerativeAI(API_KEY).getGenerativeModel({model: "gemini-1.5-pro-latest"});
+const make_model = async (): Promise<GenerativeModel> => {
+    return new GoogleGenerativeAI(await get_storage("GEMINI_API_KEY")).getGenerativeModel({model: "gemini-1.5-pro-latest"});
 }
 
 interface GeminiAnalysis {
@@ -62,7 +62,7 @@ const ASK_FOR_OUTPUT = `Based on the information you have, answer the following 
     + `Write the word GENERATIVE on this line\n`
     + `Write a topic phrase in less than four words\n`;
 const analyze_video = async (data: VideoData): Promise<GeminiAnalysis> => {
-    const model = make_model();
+    const model = await make_model();
     model.systemInstruction = { role: "user", parts: [{text: MODEL_ROLE}]};
     const chat = model.startChat({history: [{role: "user", parts: [
         {text: `The following is the transcript of a YouTube video titled "${data.title}".`

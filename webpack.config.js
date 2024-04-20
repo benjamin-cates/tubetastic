@@ -9,6 +9,7 @@ module.exports = {
       contentScript: path.resolve(__dirname, "src", "contentScript.ts"),
       content: path.resolve(__dirname, "public", "content"),
       worker: path.resolve(__dirname, "src", "worker.ts"),
+      extension_popup: path.resolve(__dirname, "src", "extension_popup.ts"),
    },
    output: {
       path: path.join(__dirname, "dist"),

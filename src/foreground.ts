@@ -1,5 +1,4 @@
 import { analyze_video } from "./gemini";
-import { get_captions } from "./worker";
 import { getThumbnailUrl } from "./thumbnails";
 import { get_description_api } from "./description_api";
 import { getDescriptions, getViewsAndPublishedDate } from "./description";

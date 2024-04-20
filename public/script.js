@@ -80,6 +80,7 @@ document.getElementById("locked-in").addEventListener("change", function () {
     setTimeout(() => {
       display.style.display = "none";
     }, 2000); // Adjust time as needed
+    
   }
 
   // Trigger the save settings function or logic here if needed

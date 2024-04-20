@@ -8,6 +8,8 @@ const get_captions = async (video_id: string): Promise<Caption[]> => {
 
 
 chrome.runtime.onConnect.addListener((port) => {
+  console.log("Opened port on: "+port);
+  if(port.name == "worker_comms")
     port.onMessage.addListener(async (message: DataRequest, _port) => {
         try {
             port.postMessage({
@@ -25,7 +27,19 @@ chrome.runtime.onConnect.addListener((port) => {
 
         }
     });
+  else if(port.name == "storage_get")
+    port.onMessage.addListener(async (message: string) => {
+      console.log("Recieved get request");
+      port.postMessage(await chrome.storage.local.get(message));
+    });
+  else if(port.name == "storage_set")
+    port.onMessage.addListener(async (message: any) => {
+      console.log("Recieved set request for "+JSON.stringify(message));
+      await chrome.storage.local.set(message);
+      port.postMessage("")
+    });
+
+  return false;
 })
 
 export type { DataResponse };
-export{get_captions};

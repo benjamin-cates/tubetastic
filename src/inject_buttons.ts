@@ -1,4 +1,3 @@
-import { get_captions } from "./worker";
 import { get_comments } from "./comments";
 import { analyze_video } from "./gemini";
 import { getThumbnailUrl } from "./thumbnails";
