@@ -1,12 +1,23 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark-mode">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="popup.css">
-    <title>Chrome Addon v3: popup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickbait Detector</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    This is the <span class="special-text">HTML</span> body of the addon.
+    <div class="popup-container">
+        <header class="popup-header">
+            <h1>hiii :3 I am youtube</h1>
+        </header>
+        <div class="analysis-result">
+            <p id="resultText">Analyzing...</p>
+        </div>
+        <div class="transcript">
+            <h2>Video Transcript</h2>
+            <p id="transcriptText">Transcript goes here...</p>
+        </div>
+    </div>
 </body>
 </html>
