@@ -3,6 +3,14 @@ import { get_captions } from "./captions";
 import { getThumbnailUrl } from "./thumbnails";
 const get_captions_for_video = async () => {
 }
+
+const get_thumbnail = async () => {
+    // get current video url
+    const videoUrl = window.location.href;
+    const thumbnailUrl = await getThumbnailUrl(videoUrl, 0);
+    console.log(thumbnailUrl);
+}
+
 const generate_test = async () => {
 
     console.log("Testing generate ");
@@ -24,11 +32,5 @@ const generate_test = async () => {
 }
 
 generate_test();
-
-const get_thumbnail = async () => {
-    const videoUrl = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-    const thumbnailUrl = await getThumbnailUrl(videoUrl, 0);
-    console.log(thumbnailUrl);
-}
 get_thumbnail();
 get_captions_for_video();
