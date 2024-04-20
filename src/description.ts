@@ -1,12 +1,15 @@
 const getDescriptions = () => {
-    // get the div with id description and class="item style-scope ytd-watch-metadata"
-    // ! This function not working
-    const bottomRowElement = document.querySelector('#bottom-row');
-    const descriptionElement = bottomRowElement ? bottomRowElement.querySelector('#description') as HTMLElement : null;
-    const expandElement = descriptionElement ? descriptionElement.querySelector('#expand') as HTMLElement : null;
-    if (expandElement) expandElement.click();
-    const innerDescriptionElement = descriptionElement ? descriptionElement.querySelector('#description-inner') as HTMLElement : null;
-    const description = innerDescriptionElement ? innerDescriptionElement.innerText : '';
+    let description = "";
+    const expandButton = document.querySelector("#expand") as HTMLElement;
+    if (expandButton) expandButton.click();
+
+    const descriptionElement = document.querySelector("#description-inline-expander") as HTMLElement;
+    const spans = descriptionElement.querySelectorAll("span");
+
+    // loop through all spans and concatenate the innerText if it is not empty
+    spans.forEach((span) => {
+        if (span.innerText) description += span.innerText;
+    });
     return description;
 }
 
