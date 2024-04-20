@@ -1,7 +1,14 @@
 // Function to hide elements based on settings
 function applyUserSettings() {
   chrome.storage.local.get(
-    ["hideRecommendations", "hideComments", "hideHomeFeed", "hideShorts", "hideNotifications", "stopAutoplay"],
+    [
+      "hideRecommendations",
+      "hideComments",
+      "hideHomeFeed",
+      "hideShorts",
+      "hideNotifications",
+      "stopAutoplay",
+    ],
     function (result) {
       // Hide or show recommendations based on the stored setting
       const recommendations = document.querySelectorAll(

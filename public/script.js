@@ -98,6 +98,11 @@ function updateLockedIn() {
       return;
     }
   });
-
-  lockedInCheckbox.checked = allChecked;
 }
+chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  const tabId = tabs[0].id;
+  chrome.scripting.executeScript({
+    target: { tabId: tabId },
+    files: ["content.js"],
+  });
+});
