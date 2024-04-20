@@ -74,7 +74,7 @@ function injectButtons() {
                 popup_message.textContent = "Captions for " + video_id + ". Anaylzing...";
               }
               else {
-                popup_message.textContent += "Captions not found for " + video_id + ". Analyzing description...";
+                popup_message.textContent = "Captions not found for " + video_id + ". Analyzing description...";
               }
               const video_data: VideoData = {
                 thumbnail: await getThumbnailUrl(video_id,0),
