@@ -36,9 +36,15 @@ function injectButtons() {
           const author = metadata.children[0].children[0].children[0].children[0].children[0].children[0].textContent!;
           const popup = document.createElement("div");
           const popup_message = document.createElement("div");
+          const rem_size = parseFloat(getComputedStyle(document.documentElement).fontSize);
           popup.classList.add("yt_analyzer_popup");
-          popup.style.left = e.pageX+"px";
-          popup.style.top = e.pageY+"px";
+          if(40*rem_size + e.pageX > window.innerWidth) {
+            popup.style.right = (window.innerWidth - e.pageX) + "px";
+          }
+          else {
+            popup.style.left = e.pageX + "px";
+          }
+          popup.style.top = Math.max(Math.min(e.pageY-20*rem_size,(window.innerHeight+window.scrollY)-40*rem_size),window.scrollY) + "px";
           popup.style.background = "#222222";
           popup.style.color = "#FFFFFF";
           popup.style.fontSize = "1.8rem";
@@ -50,6 +56,7 @@ function injectButtons() {
           close_button.style.background = "#333333";
           close_button.style.borderRadius = "0.5rem";
           close_button.style.marginBottom = "0.3rem";
+          close_button.style.border = "none";
           close_button.addEventListener("click", _ => {
             popup.remove();
           });
