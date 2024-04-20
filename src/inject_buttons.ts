@@ -24,7 +24,7 @@ function injectButtons() {
           const video_id = ((e.target as HTMLElement).parentNode as HTMLAnchorElement).href.replace("https://www.youtube.com/watch?v=","");
           const title = (e.target as HTMLElement).parentNode!.children[0].innerHTML;
           const metadata = (e.target as HTMLElement).parentNode!.parentNode!.parentNode!.children[1].children[0];
-          const author = metadata.children[0].textContent!;
+          const author = metadata.children[0].children[0].children[0].children[0].children[0].children[0].textContent!;
           const popup = document.createElement("div");
           popup.classList.add("yt_analyzer_popup");
           popup.style.left = e.pageX+"px";
@@ -50,7 +50,7 @@ function injectButtons() {
               captions: captions,
               title: title,
               author: author,
-              view_count: Number(metadata.children[1].textContent!.split(" view")[0].replace("K","000").replace(","," ").replace("M","000000").replace("B","000000000")),
+              view_count: Number(metadata.children[1].children[2].textContent!.split(" view")[0].replace("K","000").replace(","," ").replace("M","000000").replace("B","000000000")),
               top_comments: await get_comments(video_id),
               publish_date: new Date(),
               likes: 0,
