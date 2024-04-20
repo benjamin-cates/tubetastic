@@ -2,6 +2,7 @@ import { Content, Part } from "@google/generative-ai";
 
 import make_model from "./gemini";
 import {get_captions} from "./captions";
+import { getThumbnailUrl} from "./thumbnails";
 
 const MODEL_ROLE = "You are an agent, do not write any markup information \
     in your responses. Your responses should be short and to the point.";
@@ -23,5 +24,10 @@ const generate_test = async () => {
     console.log(out.response.text());
 }
 
-// generate_test();
+const get_thumbnail = async () => {
+    const videoUrl = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+    const thumbnailUrl = await getThumbnailUrl(videoUrl, 0);
+    console.log(thumbnailUrl);
+}
+get_thumbnail();
 get_captions_for_video();

@@ -10,7 +10,7 @@ const getAllThumbnails = async (url: string): Promise<string[]> => {
     for (let i = 0; i < 4; i++) {
         urls.push(await getThumbnailUrl(url, i));
     }
-    return urls;
+    return urls; 
 }
 
 export { getThumbnailUrl, getAllThumbnails };
