@@ -74,16 +74,16 @@ function injectButtons() {
               const item = document.createElement("div");
               item.classList.add("numerics_item");
               const bar = document.createElement("div");
-              bar.innerText = index[0].toUpperCase() + index.substring(1);
+              const bar_inner = document.createElement("div");
+              bar_inner.classList.add("numerics_bar_inner");
+              bar_inner.style.width = ((analysis.numerics as any)[index] * 20).toString() + "%";
+              bar_inner.innerText = index[0].toUpperCase() + index.substring(1);
+              bar.appendChild(bar_inner);
               const bar_num = document.createElement("span");
               bar_num.classList.add("numerics_bar_number");
               bar_num.innerText = (analysis.numerics as any)[index];
               bar.classList.add("numerics_bar");
               bar.appendChild(bar_num);
-              const bar_inner = document.createElement("div");
-              bar_inner.classList.add("numerics_bar_inner");
-              bar_inner.style.width = ((analysis.numerics as any)[index] * 20).toString() + "%";
-              bar.appendChild(bar_inner);
               item.appendChild(bar);
               out.appendChild(item);
             }
