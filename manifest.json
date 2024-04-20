@@ -18,7 +18,7 @@
     "background": {
     },
     "content_scripts": [{
-        "js": ["foreground.js"],
+        "js": ["dist/foreground.js"],
         "matches": ["https://youtube.com/*"]
     }]
 }
