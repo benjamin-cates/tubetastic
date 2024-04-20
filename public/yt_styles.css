@@ -1,8 +1,8 @@
 .yt_analyzer_popup {
   position: absolute;
-  width: 25vw;
-  height: 50vh;
-  border-radius: 2rem;
+  width: 40rem;
+  height:40rem;
+  border-radius: 1rem;
   padding: 2rem;
   box-shadow: 5px 4px 2px 1px rgba(0,0,0,0.4);
   overflow-y: scroll;
@@ -19,12 +19,24 @@
   color: #FFFFFF;
   width: 100%;
   padding: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right:0.5rem;
+  height: 1.5em;
 }
 
 .numerics_bar_inner {
+  height: 1.3em;
+  margin-bottom: -1.3em;
   background: #228822;
+  padding: 0.2rem;
+  border-radius: 0.4rem;
 }
 .sentences_container {
   color: #FFFFFF;
-  padding-top: 0.3rem;
+  padding-top: 1rem;
+}
+.close_button {
+  border-radius: 0.5rem;
+  border: none;
+
 }

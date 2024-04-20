@@ -1,7 +1,8 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
-   mode: "production",
+   devtool: "inline-source-map",
+   mode: "development",
    entry: {
       foreground: path.resolve(__dirname, "src", "foreground.ts"),
       inject_buttons: path.resolve(__dirname, "src", "inject_buttons.ts"),

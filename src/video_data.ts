@@ -1,4 +1,4 @@
-import { Caption } from "./captions"
+import { Caption } from "./worker_comms"
 import { Comment } from "./comments"
 
 interface VideoData {
