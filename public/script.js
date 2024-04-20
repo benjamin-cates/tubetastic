@@ -86,7 +86,9 @@ document.getElementById("locked-in").addEventListener("change", function () {
 });
 
 function updateLockedIn() {
-  const checkboxes = document.querySelectorAll('.setting input[type="checkbox"]');
+  const checkboxes = document.querySelectorAll(
+    '.setting input[type="checkbox"]'
+  );
   const lockedInCheckbox = document.getElementById("locked-in");
   let allChecked = true;
 
