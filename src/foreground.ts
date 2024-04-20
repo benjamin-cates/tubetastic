@@ -1,7 +1,7 @@
 import { analyze_video } from "./gemini";
-import { get_captions } from "./captions";
+import { get_captions } from "./worker";
 import { getThumbnailUrl } from "./thumbnails";
-import { getViewsAndPublishedDate, getDescriptions } from "./description";
+import { get_description_api } from "./description_api";
 
 const generate_test = async () => {
   console.log("Testing generate ");
@@ -41,6 +41,7 @@ const get_thumbnail = async () => {
 };
 get_thumbnail();
 
+get_description_api("jF5QiD7uxdc");
 
 const observer = new MutationObserver(() => {
     const { views, published_date } = getViewsAndPublishedDate();

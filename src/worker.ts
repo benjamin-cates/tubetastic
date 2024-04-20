@@ -1,18 +1,22 @@
 //@ts-ignore
 import { getSubtitles } from "youtube-captions-scraper";
-import { CaptionRequest, Caption, CaptionResponse } from "./captions";
+import { DataRequest, Caption, DataResponse as DataResponse } from "./worker_comms";
+import { worker_comms } from "./worker_comms";
 /// Returns the captions of a specific video ID asynchronously
 const get_captions = async (video_id: string): Promise<Caption[]> => {
   return getSubtitles({ videoID: video_id, lang: "en" });
 };
 
+
 chrome.runtime.onConnect.addListener((port) => {
-    port.onMessage.addListener(async (message: CaptionRequest, _port) => {
+    port.onMessage.addListener(async (message: DataRequest, _port) => {
         try {
             port.postMessage({
                 captions: await get_captions(message.video_url),
                 video_url: message.video_url,
-            } as CaptionResponse);
+                description: "desc",
+                likes: 0,
+            } as DataResponse);
         }
         catch(e) {
             port.postMessage({
@@ -23,3 +27,6 @@ chrome.runtime.onConnect.addListener((port) => {
         }
     });
 })
+
+export type { DataResponse };
+export{get_captions};
