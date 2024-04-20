@@ -37,9 +37,10 @@ interface GeminiNumerics {
 
 const MODEL_ROLE = "You are an agent, do not write any markup or markdown information "
     + "in your responses. Your responses should be short and to the point. "
-    + "Please follow the prompts exactly with newlines between answers, do not put the prompt name, just your answer on each line";
+    + "Please follow the prompts exactly with newlines between answers, "
+    + "do not put the prompt name, just your answer on each line";
 
-const ASK_FOR_OUTPUT = `Based on the information you have, answer the following questions by filling out the same format with your own answers.`
+const ASK_FOR_OUTPUT = `Based on the information you have, answer the following questions, do not rewrite the prompt.`
     + `Rate the following on a scale of one to five\n`
     + `Index of informative: [number]\n`
     + `Coherency: [number]\n`
@@ -67,9 +68,8 @@ const analyze_video = async (data: VideoData): Promise<GeminiAnalysis> => {
         + `The top comments are: \n${data.top_comments.map(comment=>comment.username+": "+comment.text).join("\n")}\n`
         + `The following is the description of the video: ${data.description}`},
         {text: `Here are the captions for the video: ${data.captions.map(caption => caption.text).join("\n")}`} ]}]});
-    console.log("Making chat");
     const output = (await chat.sendMessage(ASK_FOR_OUTPUT)).response.text();
-    const areas = output.split("SPLIT").map(area=>area.split("\n"));
+    const areas = output.split("SPLIT").map(area=>area.split("\n").map(line=>line.trim()).filter(line=>line.length!=0));
     return {
         numerics: {
             informativeness: Number(areas[0][0]),

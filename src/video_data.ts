@@ -1,8 +1,5 @@
 import { Caption } from "./captions"
-interface Comment {
-    text: string
-    username: string
-}
+import { Comment } from "./comments"
 
 interface VideoData {
     // Metadata

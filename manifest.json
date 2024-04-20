@@ -26,8 +26,9 @@
                 "dist/inject_buttons.js",
                 "dist/contentScript.js"
             ],
+            "css": ["dist/yt_styles.css"],
             "matches": [
-                "*://*.com/*"
+                "*://*.youtube.com/*"
             ]
         }
     ]
