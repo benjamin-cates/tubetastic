@@ -8,9 +8,18 @@ const get_captions = async (video_id: string): Promise<Caption[]> => {
 
 chrome.runtime.onConnect.addListener((port) => {
     port.onMessage.addListener(async (message: CaptionRequest, _port) => {
-        port.postMessage({
-            captions: await get_captions(message.video_url),
-            video_url: message.video_url,
-        } as CaptionResponse);
+        try {
+            port.postMessage({
+                captions: await get_captions(message.video_url),
+                video_url: message.video_url,
+            } as CaptionResponse);
+        }
+        catch(e) {
+            port.postMessage({
+                captions: [] as Caption[],
+                video_url: message.video_url,
+            })
+
+        }
     });
 })

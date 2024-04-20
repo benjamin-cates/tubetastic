@@ -30,7 +30,14 @@ function injectButtons() {
           document.body.appendChild(popup);
           get_captions(video_id).then(captions => {
             popup.textContent = "Analyzing captions for " + video_id;
-            popup.textContent += ". Starts with: \"" + captions[0].text + "\"";
+            if(captions.length > 0) {
+              popup.textContent += ". Starts with: \"" + captions[0].text + "\"";
+              // Continue with analysis
+            }
+            else {
+              popup.textContent += ". No captions found";
+              // Do analysis without captions
+            }
           })
         });
       }

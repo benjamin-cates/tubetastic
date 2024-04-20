@@ -15,6 +15,7 @@ interface Caption {
 }
 
 /// Returns the captions of a specific video ID asynchronously
+/// If no captions exist, returns CaptionResponse with empty array
 const get_captions = (video_id: string): Promise<Caption[]> => {
     return new Promise((resolve, _reject) => {
         const port = chrome.runtime.connect({name: video_id});
