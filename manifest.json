@@ -18,6 +18,7 @@
     },
     "content_scripts": [{
         "js": ["dist/foreground.js", "dist/background.js"],
+        "css": ["dist/yt_styles.css"],
         "matches": ["*://*.youtube.com/*"]
     }]
 }
