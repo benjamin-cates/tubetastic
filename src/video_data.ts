@@ -10,6 +10,7 @@ interface VideoData {
     description: string
     author: string
     publish_date: Date
+    thumbnail: string
 
     // Video content
     captions: Caption[]
@@ -18,7 +19,8 @@ interface VideoData {
     top_comments: Comment[]
     likes: number
     view_count: number
-
 }
+
+export default VideoData;
 
 
