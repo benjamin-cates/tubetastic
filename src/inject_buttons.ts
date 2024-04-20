@@ -47,11 +47,11 @@ function injectButtons() {
           get_captions(video_id).then(async captions => {
             popup.textContent = "Analyzing captions for " + video_id;
             if(captions.length > 0) {
-              popup.textContent += ". Starts with: \"" + captions[0].text + "\"";
+              popup.textContent += ". Captions found.";
               // Continue with analysis
             }
             else {
-              popup.textContent += ". No captions found";
+              popup.textContent += ". No captions found.";
               // Do analysis without captions
             }
             const video_data: VideoData = {
@@ -66,7 +66,50 @@ function injectButtons() {
               description: "",
             };
             console.log(video_data);
-            popup.textContent = JSON.stringify(await analyze_video(video_data));
+            const analysis = await analyze_video(video_data);
+            const out = document.createElement("div");
+            out.classList.add("analysis");
+            // Numerics data
+            for(let index in analysis.numerics) {
+              const item = document.createElement("div");
+              item.classList.add("numerics_item");
+              const bar = document.createElement("div");
+              bar.innerText = index[0].toUpperCase() + index.substring(1);
+              const bar_num = document.createElement("span");
+              bar_num.classList.add("numerics_bar_number");
+              bar_num.innerText = (analysis.numerics as any)[index];
+              bar.classList.add("numerics_bar");
+              bar.appendChild(bar_num);
+              const bar_inner = document.createElement("div");
+              bar_inner.classList.add("numerics_bar_inner");
+              bar_inner.style.width = ((analysis.numerics as any)[index] * 20).toString() + "%";
+              bar.appendChild(bar_inner);
+              item.appendChild(bar);
+              out.appendChild(item);
+            }
+            let text_items = [
+              ["Suggested title",analysis.sentences.suggested_title],
+              ["Summary",analysis.sentences.summary],
+              ["Style",analysis.categories.style],
+              ["Topics covered", analysis.sentences.topics_covered],
+              ["Topic phrase",analysis.sentences.topic_phrase],
+              ["Subject", analysis.categories.subject_matter]
+            ];
+            for(let item of text_items) {
+              const el = document.createElement("div");
+              el.classList.add("sentences_container");
+              const label = document.createElement("span");
+              label.innerText = item[0] + ": ";
+              label.classList.add("sentences_label");
+              const text = document.createElement("span");
+              text.innerText = item[1];
+              text.classList.add("sentences_content");
+              el.appendChild(label);
+              el.appendChild(text);
+              out.appendChild(el);
+            }
+            popup.textContent = "";
+            popup.appendChild(out);
           })
         });
       }

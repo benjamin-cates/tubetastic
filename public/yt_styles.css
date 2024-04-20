@@ -1,8 +1,30 @@
 .yt_analyzer_popup {
   position: absolute;
   width: 25vw;
-  height: 25vh;
+  height: 50vh;
   border-radius: 2rem;
   padding: 2rem;
   box-shadow: 5px 4px 2px 1px rgba(0,0,0,0.4);
+  overflow-y: scroll;
+}
+.numerics_item {
+  width: 100%;
+}
+
+.numerics_bar_number {
+  float:right;
+}
+
+.numerics_bar {
+  color: #FFFFFF;
+  width: 100%;
+  padding: 0.25rem;
+}
+
+.numerics_bar_inner {
+  background: #228822;
+}
+.sentences_container {
+  color: #FFFFFF;
+  padding-top: 0.3rem;
 }

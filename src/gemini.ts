@@ -16,7 +16,7 @@ interface GeminiAnalysis {
 interface GeminiSentences {
     summary: string
     suggested_title: string
-    background_knowledge: string
+    topics_covered: string
     topic_phrase: string
 }
 interface GeminiCategories {
@@ -42,22 +42,22 @@ const MODEL_ROLE = "You are an agent, do not write any markup or markdown inform
 
 const ASK_FOR_OUTPUT = `Based on the information you have, answer the following questions, do not rewrite the prompt.`
     + `Rate the following on a scale of one to five\n`
-    + `Index of informative: [number]\n`
-    + `Coherency: [number]\n`
-    + `Entertainment: [number]\n`
-    + `Complexity: [number]\n`
-    + `Index of clickbait: [number]\n`
-    + `Accuracy: [number]\n`
+    + `Index of informative as a number one to five\n`
+    + `Coherency as a number one to five\n`
+    + `Entertainment as a number one to five\n`
+    + `Complexity as a number one to five\n`
+    + `Index of clickbait as a number one to five\n`
+    + `Accuracy as a number one to five\n`
 
     + `Write the word SPLIT on this line. Answer the following questions\n`
-    + `Answer with either informative, narrative, essay, gameplay, music, or vlog based on the style of the video: [your answer]\n`
-    + `Answer with the subject matter of the video (two words): [your answer]\n`
+    + `Answer with either informative, narrative, essay, gameplay, music, or vlog based on the style of the video\n`
+    + `Answer with the subject matter of the video (two words)\n`
 
     + `Write the word SPLIT on this line. Answer the following questions\n`
-    + `Write short summary of the video: [sentence]\n`
-    + `Write a new title you suggest for the video: [your answer]\n`
-    + `Write the minimum background topics that are required to understand the video: [your answer]\n`
-    + `Write a topic phrase in less than four words: [your answer]\n`;
+    + `Write short summary of the video\n`
+    + `Write a new title you suggest for the video\n`
+    + `Write the topics covered that are required to understand the video\n`
+    + `Write a topic phrase in less than four words\n`;
 const analyze_video = async (data: VideoData): Promise<GeminiAnalysis> => {
     const model = make_model();
     model.systemInstruction = { role: "user", parts: [{text: MODEL_ROLE}]};
@@ -69,6 +69,7 @@ const analyze_video = async (data: VideoData): Promise<GeminiAnalysis> => {
         + `The following is the description of the video: ${data.description}`},
         {text: `Here are the captions for the video: ${data.captions.map(caption => caption.text).join("\n")}`} ]}]});
     const output = (await chat.sendMessage(ASK_FOR_OUTPUT)).response.text();
+    console.log("Gemini's analysis:\n"+output);
     const areas = output.split("SPLIT").map(area=>area.split("\n").map(line=>line.trim()).filter(line=>line.length!=0));
     return {
         numerics: {
@@ -86,7 +87,7 @@ const analyze_video = async (data: VideoData): Promise<GeminiAnalysis> => {
         sentences: {
             summary: areas[2][0],
             suggested_title: areas[2][1],
-            background_knowledge: areas[2][2],
+            topics_covered: areas[2][2],
             topic_phrase: areas[2][3]
         },
     };
