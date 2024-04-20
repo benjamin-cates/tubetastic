@@ -23,7 +23,7 @@
         {
             "js": [
                 "dist/foreground.js",
-                "dist/background.js",
+                "dist/inject_buttons.js",
                 "dist/contentScript.js"
             ],
             "matches": [

@@ -5,7 +5,7 @@ function applyUserSettings() {
     function (result) {
       if (result.hideRecommendations) {
         const recommendations = document.querySelectorAll(
-          "ytd-watch-next-secondary-results-renderer"
+          "#items.ytd-watch-next-secondary-results-renderer"
         );
         recommendations.forEach(
           (el) => ((el as HTMLElement).style.display = "none")
