@@ -4,7 +4,7 @@ module.exports = {
    mode: "production",
    entry: {
       foreground: path.resolve(__dirname, "src", "foreground.ts"),
-      background: path.resolve(__dirname, "src", "background.ts"),
+      inject_buttons: path.resolve(__dirname, "src", "inject_buttons.ts"),
       worker: path.resolve(__dirname, "src", "worker.ts"),
    },
    output: {
