@@ -1,7 +1,6 @@
 //@ts-ignore
 import { getSubtitles } from "youtube-captions-scraper";
 import { DataRequest, Caption, DataResponse as DataResponse } from "./worker_comms";
-import { worker_comms } from "./worker_comms";
 /// Returns the captions of a specific video ID asynchronously
 const get_captions = async (video_id: string): Promise<Caption[]> => {
   return getSubtitles({ videoID: video_id, lang: "en" });

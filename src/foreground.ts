@@ -42,7 +42,7 @@ const get_thumbnail = async () => {
 };
 get_thumbnail();
 
-get_description_api("jF5QiD7uxdc");
+//get_description_api("jF5QiD7uxdc");
 
 const observer = new MutationObserver(() => {
     const { views, published_date } = getViewsAndPublishedDate();

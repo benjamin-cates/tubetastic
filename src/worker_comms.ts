@@ -1,4 +1,3 @@
-//import { DataResponse } from "./worker";
 
 interface Caption {
     start: number

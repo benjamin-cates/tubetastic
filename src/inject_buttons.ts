@@ -3,6 +3,7 @@ import { get_comments } from "./comments";
 import { analyze_video } from "./gemini";
 import { getThumbnailUrl } from "./thumbnails";
 import VideoData from "./video_data";
+import { worker_comms } from "./worker_comms";
 
 function injectButtons() {
   const videoContainers = document.querySelectorAll("#details");
@@ -63,8 +64,8 @@ function injectButtons() {
           popup.appendChild(close_button);
           popup.appendChild(popup_message);
           document.body.appendChild(popup);
-          get_captions(video_id).then(async captions => {
-            if(captions.length > 0) {
+          worker_comms(video_id).then(async data_response => {
+            if(data_response.captions.length > 0) {
               popup_message.textContent = "Captions for " + video_id + ". Anaylzing...";
             }
             else {
@@ -72,14 +73,14 @@ function injectButtons() {
             }
             const video_data: VideoData = {
               thumbnail: await getThumbnailUrl(video_id,0),
-              captions: captions,
+              captions: data_response.captions,
               title: title,
               author: author,
               view_count: Number(metadata.children[1].children[2].textContent!.split(" view")[0].replace("K","000").replace(","," ").replace("M","000000").replace("B","000000000")),
               top_comments: await get_comments(video_id),
               publish_date: new Date(),
-              likes: 0,
-              description: "",
+              likes: data_response.likes,
+              description: data_response.description,
             };
             console.log(video_data);
             const analysis = await analyze_video(video_data);
