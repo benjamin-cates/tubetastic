@@ -9,15 +9,14 @@
         "default_title": "YouTube Video Analyzer popup",
         "default_popup": "dist/popup.html"
     },
-    "permissions": [
-    ],
+    "permissions": ["activeTab"],
     "host_permissions": [
         "*://*/*"
     ],
     "background": {
     },
     "content_scripts": [{
-        "js": ["dist/foreground.js"],
+        "js": ["dist/foreground.js", "dist/background.js"],
         "matches": ["*://*.com/*"]
     }]
 }

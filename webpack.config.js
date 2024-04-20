@@ -4,6 +4,7 @@ module.exports = {
    mode: "production",
    entry: {
       foreground: path.resolve(__dirname, "src", "foreground.ts"),
+      background: path.resolve(__dirname, "src", "background.ts"),
    },
    output: {
       path: path.join(__dirname, "dist"),
