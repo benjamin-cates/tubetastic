@@ -12,9 +12,9 @@ function injectButtons() {
         button.style.marginLeft = "5px";
         titleElement.parentNode!.insertBefore(button, titleElement.nextSibling);
 
-        button.addEventListener("click", function () {
+        button.addEventListener("click", function (e) {
           alert("Clickbait detection for: " + titleElement.textContent!.trim());
-          event!.stopPropagation() ;
+          e.stopPropagation();
         });
       }
     }
