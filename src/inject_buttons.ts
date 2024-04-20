@@ -62,6 +62,9 @@ function injectButtons() {
             popup.remove();
           });
           popup.appendChild(close_button);
+          const loading_circle = document.createElement("div");
+          loading_circle.classList.add("lds-dual-ring");
+          popup.appendChild(loading_circle);
           popup.appendChild(popup_message);
           document.body.appendChild(popup);
           worker_comms(video_id).then(async data_response => {
@@ -84,6 +87,7 @@ function injectButtons() {
             };
             console.log(video_data);
             const analysis = await analyze_video(video_data);
+            loading_circle.remove();
             const out = document.createElement("div");
             out.classList.add("analysis");
             // Numerics data
