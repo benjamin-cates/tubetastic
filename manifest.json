@@ -3,21 +3,32 @@
     "name": "YT (Name)",
     "description": "YouTube video analyzer",
     "version": "0.0.1",
-    "icons": {
-    },
+    "icons": {},
     "action": {
         "default_title": "YouTube Video Analyzer popup",
         "default_popup": "dist/popup.html"
     },
-    "permissions": ["activeTab"],
+    "permissions": [
+        "activeTab",
+        "storage",
+        "webRequest"
+    ],
     "host_permissions": [
         "https://*.youtube.com/*"
     ],
     "background": {
         "service_worker": "dist/worker.js"
     },
-    "content_scripts": [{
-        "js": ["dist/foreground.js", "dist/background.js"],
-        "matches": ["*://*.com/*"]
-    }]
+    "content_scripts": [
+        {
+            "js": [
+                "dist/foreground.js",
+                "dist/background.js",
+                "dist/contentScript.js"
+            ],
+            "matches": [
+                "*://*.com/*"
+            ]
+        }
+    ]
 }
