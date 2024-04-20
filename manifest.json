@@ -6,11 +6,10 @@
     "icons": {
     },
     "action": {
-        "default_title": "",
-        "default_popup": "popup/popup.html"
+        "default_title": "YouTube Video Analyzer popup",
+        "default_popup": "dist/popup.html"
     },
     "permissions": [
-        "https://*.youtube.com/*"
     ],
     "host_permissions": [
         "*://*/*"
@@ -19,6 +18,6 @@
     },
     "content_scripts": [{
         "js": ["dist/foreground.js"],
-        "matches": ["https://youtube.com/*"]
+        "matches": ["*://*.com/*"]
     }]
 }
