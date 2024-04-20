@@ -7,6 +7,7 @@ module.exports = {
       foreground: path.resolve(__dirname, "src", "foreground.ts"),
       inject_buttons: path.resolve(__dirname, "src", "inject_buttons.ts"),
       contentScript: path.resolve(__dirname, "src", "contentScript.ts"),
+      content: path.resolve(__dirname, "public", "content"),
       worker: path.resolve(__dirname, "src", "worker.ts"),
    },
    output: {

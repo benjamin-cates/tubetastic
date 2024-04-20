@@ -27,7 +27,8 @@
             "js": [
                 "dist/foreground.js",
                 "dist/inject_buttons.js",
-                "dist/contentScript.js"
+                "dist/contentScript.js",
+                "dist/content.js"
             ],
             "css": ["dist/yt_styles.css"],
             "matches": [
