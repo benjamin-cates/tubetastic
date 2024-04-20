@@ -10,7 +10,9 @@ function injectButtons() {
   videoContainers.forEach((container) => {
     if (!container.querySelector(".clickbait-detector-button")) {
       const titleElement = container.querySelector("#video-title");
-
+      if((container.parentNode!.parentNode! as HTMLElement).hasAttribute("is-short")) {
+        return;
+      }
       if (titleElement) {
         const button = document.createElement("button");
         button.innerText = "Detect Clickbait";
@@ -67,70 +69,76 @@ function injectButtons() {
           popup.appendChild(popup_message);
           document.body.appendChild(popup);
           worker_comms(video_id).then(async data_response => {
-            if(data_response.captions.length > 0) {
-              popup_message.textContent = "Captions for " + video_id + ". Anaylzing...";
+            try {
+              if(data_response.captions.length > 0) {
+                popup_message.textContent = "Captions for " + video_id + ". Anaylzing...";
+              }
+              else {
+                popup_message.textContent += "Captions not found for " + video_id + ". Analyzing description...";
+              }
+              const video_data: VideoData = {
+                thumbnail: await getThumbnailUrl(video_id,0),
+                captions: data_response.captions,
+                title: title,
+                author: author,
+                view_count: Number(metadata.children[1].children[2].textContent!.split(" view")[0].replace("K","000").replace(","," ").replace("M","000000").replace("B","000000000")),
+                top_comments: await get_comments(video_id),
+                publish_date: new Date(),
+                likes: data_response.likes,
+                description: data_response.description,
+              };
+              console.log(video_data);
+              const analysis = await analyze_video(video_data);
+              loading_circle.remove();
+              const out = document.createElement("div");
+              out.classList.add("analysis");
+              // Numerics data
+              for(let index in analysis.numerics) {
+                const item = document.createElement("div");
+                item.classList.add("numerics_item");
+                const bar = document.createElement("div");
+                const bar_inner = document.createElement("div");
+                bar_inner.classList.add("numerics_bar_inner");
+                bar_inner.style.width = ((analysis.numerics as any)[index] * 20).toString() + "%";
+                bar_inner.innerText = index[0].toUpperCase() + index.substring(1);
+                bar.appendChild(bar_inner);
+                const bar_num = document.createElement("span");
+                bar_num.classList.add("numerics_bar_number");
+                bar_num.innerText = (analysis.numerics as any)[index];
+                bar.classList.add("numerics_bar");
+                bar.appendChild(bar_num);
+                item.appendChild(bar);
+                out.appendChild(item);
+              }
+              let text_items = [
+                ["Suggested title",analysis.sentences.suggested_title],
+                ["Summary",analysis.sentences.summary],
+                ["Style",analysis.categories.style],
+                ["Topics covered", analysis.sentences.topics_covered],
+                ["Topic phrase",analysis.sentences.topic_phrase],
+                ["Subject", analysis.categories.subject_matter]
+              ];
+              for(let item of text_items) {
+                const el = document.createElement("div");
+                el.classList.add("sentences_container");
+                const label = document.createElement("span");
+                label.innerText = item[0] + ": ";
+                label.classList.add("sentences_label");
+                const text = document.createElement("span");
+                text.innerText = item[1];
+                text.classList.add("sentences_content");
+                el.appendChild(label);
+                el.appendChild(text);
+                out.appendChild(el);
+              }
+              popup_message.textContent = "";
+              popup.appendChild(out);
             }
-            else {
-              popup_message.textContent += "Captions not found for " + video_id + ". Analyzing description...";
+            catch(e) {
+              popup_message.textContent = "Error: " + e;
             }
-            const video_data: VideoData = {
-              thumbnail: await getThumbnailUrl(video_id,0),
-              captions: data_response.captions,
-              title: title,
-              author: author,
-              view_count: Number(metadata.children[1].children[2].textContent!.split(" view")[0].replace("K","000").replace(","," ").replace("M","000000").replace("B","000000000")),
-              top_comments: await get_comments(video_id),
-              publish_date: new Date(),
-              likes: data_response.likes,
-              description: data_response.description,
-            };
-            console.log(video_data);
-            const analysis = await analyze_video(video_data);
-            loading_circle.remove();
-            const out = document.createElement("div");
-            out.classList.add("analysis");
-            // Numerics data
-            for(let index in analysis.numerics) {
-              const item = document.createElement("div");
-              item.classList.add("numerics_item");
-              const bar = document.createElement("div");
-              const bar_inner = document.createElement("div");
-              bar_inner.classList.add("numerics_bar_inner");
-              bar_inner.style.width = ((analysis.numerics as any)[index] * 20).toString() + "%";
-              bar_inner.innerText = index[0].toUpperCase() + index.substring(1);
-              bar.appendChild(bar_inner);
-              const bar_num = document.createElement("span");
-              bar_num.classList.add("numerics_bar_number");
-              bar_num.innerText = (analysis.numerics as any)[index];
-              bar.classList.add("numerics_bar");
-              bar.appendChild(bar_num);
-              item.appendChild(bar);
-              out.appendChild(item);
-            }
-            let text_items = [
-              ["Suggested title",analysis.sentences.suggested_title],
-              ["Summary",analysis.sentences.summary],
-              ["Style",analysis.categories.style],
-              ["Topics covered", analysis.sentences.topics_covered],
-              ["Topic phrase",analysis.sentences.topic_phrase],
-              ["Subject", analysis.categories.subject_matter]
-            ];
-            for(let item of text_items) {
-              const el = document.createElement("div");
-              el.classList.add("sentences_container");
-              const label = document.createElement("span");
-              label.innerText = item[0] + ": ";
-              label.classList.add("sentences_label");
-              const text = document.createElement("span");
-              text.innerText = item[1];
-              text.classList.add("sentences_content");
-              el.appendChild(label);
-              el.appendChild(text);
-              out.appendChild(el);
-            }
-            popup_message.textContent = "";
-            popup.appendChild(out);
           })
+
 
         });
       }
