@@ -12,7 +12,7 @@ const get_captions_for_video = async () => {
     response.text().then(console.log)
         console.log("We got a response !");
     });
-    const content = get_captions(video_id, console.log);
+    const content = get_captions(video_id).then(console.log);
     console.log(content);
 
 }
