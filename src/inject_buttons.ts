@@ -16,10 +16,10 @@ function injectButtons() {
         button.innerText = "Detect Clickbait";
         button.classList.add("clickbait-detector-button");
         button.style.marginLeft = "5px";
-        button.style.padding = "5px";
+        button.style.padding = ".2rem";
         button.style.border = "none";
         // dark background and light text
-        button.style.background = "#121a1f";
+        button.style.background = "#1e2c33";
         button.style.color = "#FFFFFF";
         button.style.cursor = "pointer";
         button.style.fontSize = "1.2rem";
