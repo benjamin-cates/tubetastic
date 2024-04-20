@@ -10,6 +10,7 @@ function loadSettings() {
       document.getElementById("hide-notifications").checked =
         result.hideComments;
       document.getElementById("stop-autoplay").checked = result.hideComments;
+      updateLockedIn();
     }
   );
 }
@@ -34,6 +35,8 @@ function saveSettings() {
     hideNotifications: hideNotifications,
     stopAutoplay: stopAutoplay,
   });
+
+  updateLockedIn();
 }
 
 // Event listeners for changes in the checkboxes
@@ -65,6 +68,7 @@ document.getElementById("locked-in").addEventListener("change", function () {
   checkboxes.forEach((checkbox) => {
     checkbox.checked = lockedIn;
   });
+  saveSettings();
 
   if (lockedIn) {
     // Perform the dramatic display
@@ -80,3 +84,18 @@ document.getElementById("locked-in").addEventListener("change", function () {
 
   // Trigger the save settings function or logic here if needed
 });
+
+function updateLockedIn() {
+  const checkboxes = document.querySelectorAll('.setting input[type="checkbox"]');
+  const lockedInCheckbox = document.getElementById("locked-in");
+  let allChecked = true;
+
+  checkboxes.forEach((checkbox) => {
+    if (!checkbox.checked) {
+      allChecked = false;
+      return;
+    }
+  });
+
+  lockedInCheckbox.checked = allChecked;
+}
