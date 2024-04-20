@@ -35,6 +35,7 @@ function injectButtons() {
           const metadata = (e.target as HTMLElement).parentNode!.parentNode!.parentNode!.children[1].children[0];
           const author = metadata.children[0].children[0].children[0].children[0].children[0].children[0].textContent!;
           const popup = document.createElement("div");
+          const popup_message = document.createElement("div");
           popup.classList.add("yt_analyzer_popup");
           popup.style.left = e.pageX+"px";
           popup.style.top = e.pageY+"px";
@@ -42,17 +43,25 @@ function injectButtons() {
           popup.style.color = "#FFFFFF";
           popup.style.fontSize = "1.8rem";
           popup.style.zIndex = "4000";
-          popup.textContent = "Getting captions for "+video_id;
+          popup_message.textContent = "Getting captions for "+video_id;
+          const close_button = document.createElement("button");
+          close_button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>`;
+          close_button.classList.add("popup_close");
+          close_button.style.background = "#333333";
+          close_button.style.borderRadius = "0.5rem";
+          close_button.style.marginBottom = "0.3rem";
+          close_button.addEventListener("click", _ => {
+            popup.remove();
+          });
+          popup.appendChild(close_button);
+          popup.appendChild(popup_message);
           document.body.appendChild(popup);
           get_captions(video_id).then(async captions => {
-            popup.textContent = "Analyzing captions for " + video_id;
             if(captions.length > 0) {
-              popup.textContent += ". Captions found.";
-              // Continue with analysis
+              popup_message.textContent = "Captions for " + video_id + ". Anaylzing...";
             }
             else {
-              popup.textContent += ". No captions found.";
-              // Do analysis without captions
+              popup_message.textContent += "Captions not found for " + video_id + ". Analyzing description...";
             }
             const video_data: VideoData = {
               thumbnail: await getThumbnailUrl(video_id,0),
@@ -108,9 +117,10 @@ function injectButtons() {
               el.appendChild(text);
               out.appendChild(el);
             }
-            popup.textContent = "";
+            popup_message.textContent = "";
             popup.appendChild(out);
           })
+
         });
       }
     }
