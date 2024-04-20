@@ -5,6 +5,7 @@ module.exports = {
    entry: {
       foreground: path.resolve(__dirname, "src", "foreground.ts"),
       background: path.resolve(__dirname, "src", "background.ts"),
+      worker: path.resolve(__dirname, "src", "worker.ts"),
    },
    output: {
       path: path.join(__dirname, "dist"),
