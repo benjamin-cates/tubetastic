@@ -1,0 +1,59 @@
+#container.ytd-masthead {
+  background: #086b29 !important;
+}
+#contents.ytd-rich-grid-renderer, #page-header.ytd-tabbed-page-header {
+  background: #05471b !important;
+}
+ytd-browse.ytd-page-manager {
+  background: #05471b !important;
+}
+
+ytd-feed-filter-chip-bar-renderer #right-arrow.ytd-feed-filter-chip-bar-renderer:before {
+  background: linear-gradient(to left, #0b451e 20%, rgba(33, 33, 33, 0) 80%) !important;
+}
+
+ytd-feed-filter-chip-bar-renderer[is-dark-theme] #left-arrow.ytd-feed-filter-chip-bar-renderer:after {
+  background: linear-gradient(to right,var(--yt-spec-base-background) 20%,rgba(33,33,33,0) 80%) !important;
+}
+
+#left-arrow-button.ytd-feed-filter-chip-bar-renderer, #right-arrow-button.ytd-feed-filter-chip-bar-renderer {
+  background: #05471b !important;
+}
+ytd-mini-guide-renderer {
+  background: rgb(7, 89, 34) !important;
+}
+#chips-content {
+  background: #075922 !important;
+}
+
+ytd-mini-guide-entry-renderer {
+  background: rgb(7, 89, 34) !important;
+}
+
+#page-manager.ytd-app {
+  background: #05471b !important;
+}
+
+#container.ytd-searchbox {
+  border: none !important;
+  background: #0c5d27 !important;
+}
+#search-icon-legacy.ytd-searchbox {
+  border: none !important;
+}
+#guide-content.ytd-app {
+  background: rgb(7, 89, 34) !important;
+}
+
+ytd-engagement-panel-section-list-renderer {
+  border: none !important;
+}
+
+.button-container.ytd-rich-shelf-renderer {
+  background: #05471b !important;
+}
+
+.arrow.yt-horizontal-list-renderer {
+  background: #0c5d27 !important;
+}
+

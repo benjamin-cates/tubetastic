@@ -96,6 +96,7 @@ function injectButtons() {
           } else {
             popup.style.left = e.pageX + "px";
           }
+          popup.style.top = top;
           popup.style.background = "#222222";
           popup.style.color = "#FFFFFF";
           popup.style.fontSize = "1.8rem";

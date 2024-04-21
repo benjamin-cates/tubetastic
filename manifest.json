@@ -31,7 +31,7 @@
                 "dist/contentScript.js",
                 "dist/content.js"
             ],
-            "css": ["dist/yt_styles.css"],
+            "css": ["dist/yt_styles.css", "public/green_theme.css"],
             "matches": [
                 "*://*.youtube.com/*"
             ]
