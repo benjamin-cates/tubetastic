@@ -4,7 +4,7 @@ import { get_storage } from "./worker_comms";
 
 
 const make_model = async (): Promise<GenerativeModel> => {
-    return new GoogleGenerativeAI(await get_storage("GEMINI_API_KEY")).getGenerativeModel({model: "gemini-1.5-pro-latest"});
+    return new GoogleGenerativeAI((await get_storage("GEMINI_API_KEY") as any).GEMINI_API_KEY).getGenerativeModel({model: "gemini-1.5-pro-latest"});
 }
 
 interface GeminiAnalysis {

@@ -38,7 +38,7 @@ function injectButtons() {
           e.preventDefault();
           e.stopPropagation();
           const video_id = ((e.target as HTMLElement).parentNode as HTMLAnchorElement).href.replace("https://www.youtube.com/watch?v=","");
-          const title = (e.target as HTMLElement).parentNode!.children[0].innerHTML;
+          const title = titleElement!.querySelector("yt-formatted-string")!.textContent!;
           const author = container.querySelector("#channel-name")!.textContent!;
           const popup = document.createElement("div");
           const popup_message = document.createElement("div");

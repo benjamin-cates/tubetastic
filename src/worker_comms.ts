@@ -33,7 +33,7 @@ const get_storage = async (item: string): Promise<any> => {
     const port = chrome.runtime.connect({name: "storage_get"});
     port.postMessage(item)
     port.onMessage.addListener((message: any) => {
-      resolve(message.GEMINI_API_KEY as string);
+      resolve(message as any);
     });
   });
 }
