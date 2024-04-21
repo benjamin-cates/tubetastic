@@ -5,11 +5,11 @@ import VideoData from "./video_data";
 import { worker_comms } from "./worker_comms";
 
 function injectButtons() {
-  const videoContainers = document.querySelectorAll("#details, div#meta");
+  const videoContainers = document.querySelectorAll("#details, .details, div#meta");
 
   videoContainers.forEach((container) => {
     if (!container.querySelector(".analyze-video-button")) {
-      let titleElement = container.querySelector("a#video-title-link, a#video-title");
+      let titleElement = container.querySelector("a#video-title-link, #video-title");
       if(!titleElement) return;
       if((container.parentNode!.parentNode! as HTMLElement).hasAttribute("is-short")) {
         return;
@@ -36,8 +36,10 @@ function injectButtons() {
         button.addEventListener("click", (e: MouseEvent) => {
           e.preventDefault();
           e.stopPropagation();
-          const video_id = ((e.target as HTMLElement).parentNode!.querySelector("a") as HTMLAnchorElement).href.replace("https://www.youtube.com/watch?v=","");
-          const title = titleElement!.querySelector("yt-formatted-string")!.textContent!;
+          let anchor = ((e.target as HTMLElement).parentNode!.querySelector("a")) as HTMLAnchorElement;
+          if(!anchor) anchor = (e.target as HTMLElement).parentNode!.parentNode! as HTMLAnchorElement;
+          const video_id = anchor.href.replace("https://www.youtube.com/watch?v=","");
+          const title = titleElement!.parentElement!.querySelector("yt-formatted-string, span")!.textContent!;
           const author = container.querySelector("#channel-name")!.textContent!;
           const popup = document.createElement("div");
           const popup_message = document.createElement("div");
