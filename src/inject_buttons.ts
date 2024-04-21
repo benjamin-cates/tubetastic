@@ -11,7 +11,6 @@ function injectButtons() {
     if (!container.querySelector(".analyze-video-button")) {
       let titleElement = container.querySelector("a#video-title-link, a#video-title");
       if(!titleElement) return;
-      titleElement = titleElement.children[0];
       if((container.parentNode!.parentNode! as HTMLElement).hasAttribute("is-short")) {
         return;
       }
@@ -37,7 +36,7 @@ function injectButtons() {
         button.addEventListener("click", (e: MouseEvent) => {
           e.preventDefault();
           e.stopPropagation();
-          const video_id = ((e.target as HTMLElement).parentNode as HTMLAnchorElement).href.replace("https://www.youtube.com/watch?v=","");
+          const video_id = ((e.target as HTMLElement).parentNode!.querySelector("a") as HTMLAnchorElement).href.replace("https://www.youtube.com/watch?v=","");
           const title = titleElement!.querySelector("yt-formatted-string")!.textContent!;
           const author = container.querySelector("#channel-name")!.textContent!;
           const popup = document.createElement("div");
