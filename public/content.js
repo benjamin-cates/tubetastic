@@ -26,6 +26,8 @@ function startWebcam() {
     videoElement.style.bottom = "50px";
     videoElement.style.right = "50px";
     videoElement.className = "webcam";
+    videoElement.style.width = "200px";
+    videoElement.style.height = "150px";
     videoElement.style.zIndex = "10000";
     navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
       console.log("stream", stream);
@@ -45,3 +47,4 @@ let model, webcam, labelContainer, maxPredictions;
 // Load the image model and setup the webcam
 
 startWebcam();
+stopWebcam();
