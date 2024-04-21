@@ -6,6 +6,20 @@ html {
   color: white;
   width: 500px;
   font-family: Lato, Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 1.2rem;
+}
+
+input[type="text"] {
+  font-size: 1.1rem;
+  background: #333333;
+  color: #FFF;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.6rem;
+}
+
+a, a:visited {
+  color: #99c3ff;
 }
 
 .dark-mode {
@@ -98,7 +112,7 @@ button:hover {
   text-align: center;
   line-height: 200px;
   color: white;
-  font-size: 2em;
+  font-size: 1rem;
   animation: dramaticEntry 0.5s ease-out forwards;
 }
 
