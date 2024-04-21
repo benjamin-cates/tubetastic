@@ -16,6 +16,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 function startWebcam() {
   (function () {
+    if (document.querySelector(".webcam")) {
+      document.querySelector(".webcam").style.display = "block";
+      return;
+    }
     let videoElement = document.createElement("video");
     videoElement.autoplay = true;
     videoElement.style.position = "fixed";
