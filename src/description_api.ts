@@ -8,8 +8,8 @@ const get_description_api = async (video_id: string): Promise<string[]> => {
     return data.items.map((item: any) => {
         return item.snippet.description;
     });
-  
 }
+
 const get_statistics_api = async (video_id: string): Promise<any[]> => {
     const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${video_id}&key=${YOUTUBE_API_KEY}`);
     const data = await response.json();
@@ -19,4 +19,22 @@ const get_statistics_api = async (video_id: string): Promise<any[]> => {
     });
   
 }
-export { get_description_api, get_statistics_api };
+
+//  Use the youtube api to get info of a video, combining the statistics and the description apis above
+const get_video_info = async (video_id: string): Promise<any[]> => {
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=${video_id}&key=${YOUTUBE_API_KEY}&fields=items(snippet(description,publishedAt),statistics(viewCount))`);
+    const data = await response.json();
+    if(data.error) return [];
+    return data.items.map((item: any) => {
+        return {
+            description: item.snippet.description,
+            publishedAt: item.snippet.publishedAt,
+            likes: item.statistics.likeCount,
+            views: item.statistics.viewCount
+        };
+    });
+}
+
+
+
+export { get_description_api, get_statistics_api, get_video_info };
