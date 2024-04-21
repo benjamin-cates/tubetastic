@@ -5,12 +5,17 @@ import VideoData from "./video_data";
 import { worker_comms } from "./worker_comms";
 
 function injectButtons() {
-  const videoContainers = document.querySelectorAll("#details");
+  const videoContainers = document.querySelectorAll("#details, div#meta");
 
   videoContainers.forEach((container) => {
     if (!container.querySelector(".analyze-video-button")) {
-      const titleElement = container.querySelector("#video-title");
+      let titleElement = container.querySelector("a#video-title-link, a#video-title");
+      if(!titleElement) return;
+      titleElement = titleElement.children[0];
       if((container.parentNode!.parentNode! as HTMLElement).hasAttribute("is-short")) {
+        return;
+      }
+      if((container.parentNode!.parentNode! as HTMLElement).nodeName.toLowerCase()=="ytd-reel-item-renderer") {
         return;
       }
       if (titleElement) {
@@ -34,8 +39,7 @@ function injectButtons() {
           e.stopPropagation();
           const video_id = ((e.target as HTMLElement).parentNode as HTMLAnchorElement).href.replace("https://www.youtube.com/watch?v=","");
           const title = (e.target as HTMLElement).parentNode!.children[0].innerHTML;
-          const metadata = (e.target as HTMLElement).parentNode!.parentNode!.parentNode!.children[1].children[0];
-          const author = metadata.children[0].children[0].children[0].children[0].children[0].children[0].textContent!;
+          const author = container.querySelector("#channel-name")!.textContent!;
           const popup = document.createElement("div");
           const popup_message = document.createElement("div");
           const rem_size = parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -81,7 +85,7 @@ function injectButtons() {
                 captions: data_response.captions,
                 title: title,
                 author: author,
-                view_count: Number(metadata.children[1].children[2].textContent!.split(" view")[0].replace("K","000").replace(","," ").replace("M","000000").replace("B","000000000")),
+                view_count: Number(container.querySelector("#metadata-line")!.children[2].textContent!.split(" view")[0].replace("K","000").replace(","," ").replace("M","000000").replace("B","000000000")),
                 top_comments: await get_comments(video_id),
                 publish_date: new Date(),
                 likes: data_response.likes,

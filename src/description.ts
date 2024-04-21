@@ -1,16 +1,21 @@
 const getDescriptions = () => {
-    let description = "";
-    const expandButton = document.querySelector("#expand") as HTMLElement;
-    if (expandButton) expandButton.click();
+    try {
+        let description = "";
+        const expandButton = document.querySelector("#expand") as HTMLElement;
+        if (expandButton) expandButton.click();
 
-    const descriptionElement = document.querySelector("#description-inline-expander") as HTMLElement;
-    const spans = descriptionElement.querySelectorAll("span");
+        const descriptionElement = document.querySelector("#description-inline-expander") as HTMLElement;
+        const spans = descriptionElement.querySelectorAll("span");
 
-    // loop through all spans and concatenate the innerText if it is not empty
-    spans.forEach((span) => {
-        if (span.innerText) description += span.innerText;
-    });
-    return description;
+        // loop through all spans and concatenate the innerText if it is not empty
+        spans.forEach((span) => {
+            if (span.innerText) description += span.innerText;
+        });
+        return description;
+    }
+    catch(e) {
+        return undefined;
+    }
 }
 
 const getViewsAndPublishedDate = () => {
