@@ -25,7 +25,7 @@ function applyUserSettings() {
           ? "none"
           : "block";
       });
-      const home_feed = document.querySelectorAll("#primary");
+      const home_feed = document.querySelectorAll("#contents.ytd-rich-grid-renderer");
       Array.from(home_feed).forEach((el) => {
         (el as HTMLElement).style.display = result.hideHomeFeed
           ? "none"
