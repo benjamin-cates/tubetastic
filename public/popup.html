@@ -54,10 +54,14 @@
           <label for="face-cam">Face Cam</label>
           <input type="checkbox" id="face-cam" checked />
         </div>
+        <div id="webcam-container"></div> <!-- Container for the webcam video -->
+        <div id="label-container"></div> <!-- Container for the model's predictions -->
       </div>
     </div>
     <script defer src="script.js"></script>
     <script defer src="content.js"></script>
     <script defer src="extension_popup.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
   </body>
 </html>

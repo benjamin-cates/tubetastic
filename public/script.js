@@ -80,7 +80,6 @@ document.getElementById("locked-in").addEventListener("change", function () {
     setTimeout(() => {
       display.style.display = "none";
     }, 2000); // Adjust time as needed
-    
   }
 
   // Trigger the save settings function or logic here if needed
@@ -101,37 +100,80 @@ function updateLockedIn() {
   });
 }
 
-
 // This function will be called whenever the checkbox is toggled
 function toggleFaceCam(isChecked) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const tabId = tabs[0].id;
     if (isChecked) {
       // If the checkbox is checked, inject the content script
-      chrome.scripting.executeScript({
-        target: { tabId: tabId },
-        files: ["public/content.js"], // Make sure the path is correct
-      }, () => {
-        if (chrome.runtime.lastError) {
-          console.error(`Error injecting script: ${chrome.runtime.lastError.message}`);
+      chrome.scripting.executeScript(
+        {
+          target: { tabId: tabId },
+          files: ["public/content.js"], // Make sure the path is correct
+        },
+        () => {
+          if (chrome.runtime.lastError) {
+            console.error(
+              `Error injecting script: ${chrome.runtime.lastError.message}`
+            );
+          }
         }
-      });
+      );
     } else {
       // If the checkbox is not checked, you can't "un-inject" a script.
       // You might disable the script's effects or notify the content script to stop operations.
       // This can be done via a message passing system. For example:
-      chrome.tabs.sendMessage(tabId, { action: 'disableWebcam' });
+      chrome.tabs.sendMessage(tabId, { action: "disableWebcam" });
     }
   });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  const faceCamCheckbox = document.getElementById('face-cam');
+document.addEventListener("DOMContentLoaded", function () {
+  const faceCamCheckbox = document.getElementById("face-cam");
 
   // Set up the initial toggle state and attach an event listener
   toggleFaceCam(faceCamCheckbox.checked);
-  faceCamCheckbox.addEventListener('change', function() {
+  initWebcamAndModel().then(() => {
+    loop();
+  });
+  faceCamCheckbox.addEventListener("change", function () {
     toggleFaceCam(this.checked);
   });
 });
 
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('face-cam').addEventListener('click', function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {action: "toggleWebcam"});
+    });
+  });
+});
+
+// async function initWebcamAndModel() {
+//   const URL = "https://teachablemachine.withgoogle.com/models/kyDscBDaI/";
+//   const modelURL = URL + "model.json";
+//   const metadataURL = URL + "metadata.json";
+
+//   model = await tmImage.load(modelURL, metadataURL);
+//   maxPredictions = model.getTotalClasses();
+
+//   webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+//   await webcam.setup(); // request access to the webcam
+//   await webcam.play();
+
+//   document.getElementById("webcam-container").appendChild(webcam.canvas);
+//   labelContainer = document.getElementById("label-container");
+//   for (let i = 0; i < maxPredictions; i++) {
+//     labelContainer.appendChild(document.createElement("div"));
+//   }
+
+//   // Start the prediction loop
+//   window.requestAnimationFrame(loop);
+// }
+
+// async function loop() {
+//   webcam.update(); // update the webcam frame
+//   await predict();
+//   window.requestAnimationFrame(loop);
+// }

@@ -9,8 +9,8 @@ function startWebcam() {
     let videoElement = document.createElement("video");
     videoElement.autoplay = true;
     videoElement.style.position = "fixed";
-    videoElement.style.bottom = "10px";
-    videoElement.style.right = "10px";
+    videoElement.style.bottom = "50px";
+    videoElement.style.right = "50px";
     videoElement.style.zIndex = "10000";
     navigator.mediaDevices
       .getUserMedia({ video: true })
@@ -28,9 +28,128 @@ function startWebcam() {
 
 function stopWebcam() {
   // Logic to stop the webcam goes here
-  document.querySelector("video").remove();
+  document.querySelector("webcam-container").style.display = "none";
+}
+let model, webcam, labelContainer, maxPredictions;
 
+// Load the image model and setup the webcam
+async function initWebcamAndModel() {
+  const URL = "https://teachablemachine.withgoogle.com/models/kyDscBDaI/";
+  const modelURL = URL + "model.json";
+  const metadataURL = URL + "metadata.json";
+
+  model = await tmImage.load(modelURL, metadataURL);
+  maxPredictions = model.getTotalClasses();
+
+  webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+  await webcam.setup(); // request access to the webcam
+  await webcam.play();
+
+  let word = document.getElementById("webcam-container");
+  word.appendChild(webcam.canvas);
+  word.autoplay = true;
+  word.style.position = "fixed";
+  word.style.bottom = "50px";
+  word.style.right = "50px";
+  word.style.zIndex = "10000";
+  labelContainer = document.getElementById("label-container");
+  for (let i = 0; i < maxPredictions; i++) {
+    labelContainer.appendChild(document.createElement("div"));
+  }
+
+  // Start the prediction loop
+  window.requestAnimationFrame(loop);
 }
 
+async function loop() {
+  webcam.update(); // update the webcam frame
+  await predict();
+  window.requestAnimationFrame(loop);
+}
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.action === "toggleWebcam") {
+    // Check if the webcam is already injected
+    if (!document.getElementById("webcam-container")) {
+      // Inject the webcam and label containers
+      const webcamContainer = document.createElement("div");
+      webcamContainer.style.position = "fixed";
+      // position: fixed; bottom: 50px; right: 50px; z-index: 10000;
+      webcamContainer.style.bottom = "50px";
+      webcamContainer.style.right = "50px";
+      webcamContainer.style.zIndex = "10011";
+      webcamContainer.style.fontSize = "36px";
+      webcamContainer.style.display = "block";
+      webcamContainer.style.height = "200px";
+      webcamContainer.style.width = "200px";
+      webcamContainer.id = "webcam-container";
+      document.body.appendChild(webcamContainer);
+
+      const labelContainer = document.createElement("div");
+      labelContainer.style.position = "fixed";
+      labelContainer.style.bottom = "50px";
+      labelContainer.style.right = "50px";
+      labelContainer.style.zIndex = "10011";
+      labelContainer.style.fontSize = "36px";
+      labelContainer.style.height = "200px";
+      labelContainer.style.width = "200px";
+      labelContainer.style.display = "block";
+      labelContainer.id = "label-container";
+      document.body.appendChild(labelContainer);
+
+      // Initialize the webcam and model here (similar to the initWebcamAndModel function)
+      initWebcamAndModel();
+    } else {
+      // Toggle the webcam visibility or remove it
+      const webcamContainer = document.getElementById("webcam-container");
+      webcamContainer.style.display =
+        webcamContainer.style.display === "none" ? "block" : "none";
+      const labelContainer = document.getElementById("label-container");
+      labelContainer.style.display =
+        labelContainer.style.display === "none" ? "block" : "none";
+    }
+  }
+});
+
+async function initWebcamAndModel() {
+  const URL = "https://teachablemachine.withgoogle.com/models/kyDscBDaI/";
+  const modelURL = URL + "model.json";
+  const metadataURL = URL + "metadata.json";
+
+  model = await tmImage.load(modelURL, metadataURL);
+  maxPredictions = model.getTotalClasses();
+
+  webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+  await webcam.setup(); // request access to the webcam
+  await webcam.play();
+
+  document.getElementById("webcam-container").appendChild(webcam.canvas);
+  labelContainer = document.getElementById("label-container");
+  for (let i = 0; i < maxPredictions; i++) {
+    labelContainer.appendChild(document.createElement("div"));
+  }
+
+  // Start the prediction loop
+  window.requestAnimationFrame(loop);
+}
+
+async function loop() {
+  webcam.update(); // update the webcam frame
+  await predict();
+  window.requestAnimationFrame(loop);
+}
+
+async function predict() {
+  // Predict the current frame.
+  const prediction = await model.predict(webcam.canvas);
+  for (let i = 0; i < maxPredictions; i++) {
+    const classPrediction =
+      prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+    labelContainer.childNodes[i].textContent = classPrediction;
+  }
+}
+
+// Add event listeners when the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", initWebcamAndModel);
 
 startWebcam();
