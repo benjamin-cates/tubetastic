@@ -14,6 +14,7 @@ chrome.runtime.onConnect.addListener((port) => {
             // const description = await get_description_api(message.video_url);
             // const statistics = await get_statistics_api(message.video_url);
             const video_info = await get_video_info(message.video_url);
+            console.log(video_info);
             port.postMessage({
                 captions: await get_captions(message.video_url),
                 video_url: message.video_url,
