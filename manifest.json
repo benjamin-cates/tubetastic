@@ -1,13 +1,14 @@
 {
     "manifest_version": 3,
-    "name": "YouTube Analyzer",
-    "description": "YouTube video analyzer and focus mode",
-    "version": "0.3.0",
+    "name": "TubeTasTic",
+    "description": "YouTube video analyzer with focus mode and custom themeing",
+    "version": "0.4.0",
     "icons": {
-        "64": "img/icon64.png"
+        "64": "img/icon64.png",
+        "256": "img/icon256.png"
     },
     "action": {
-        "default_title": "YouTube Video Analyzer popup",
+        "default_title": "TubeTasTic",
         "default_popup": "dist/popup.html"
     },
     "permissions": [
