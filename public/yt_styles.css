@@ -41,6 +41,16 @@
 
 }
 
+.prompt_follow_up, .prompt_submit {
+  background: #333;
+  padding: 0.5rem;
+  color: #FFF;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+}
+
 .lds-dual-ring {
   color: rgb(41, 95, 192);
   float: right;

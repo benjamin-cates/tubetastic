@@ -136,6 +136,32 @@ function injectButtons() {
                 el.appendChild(text);
                 out.appendChild(el);
               }
+              const recursion = () => {
+                const follow_up = document.createElement("input");
+                follow_up.type = "text";
+                follow_up.classList.add("prompt_follow_up");
+                follow_up.placeholder = "Ask a follow up question?";
+                follow_up.style.background = "#333";
+                const submit = document.createElement("button");
+                submit.classList.add("prompt_submit");
+                submit.innerText = "Submit";
+                submit.style.background = "#333";
+                const ask_follow_up = async () => {
+                  follow_up.disabled = true;
+                  submit.disabled = true;
+                  const resp_el = document.createElement("div");
+                  resp_el.classList.add("follow_up_response");
+                  resp_el.textContent = "Running model...";
+                  out.appendChild(resp_el);
+                  resp_el.textContent = await analysis.follow_up(follow_up.value); 
+                  recursion();
+                }
+                out.appendChild(follow_up);
+                out.appendChild(submit);
+                follow_up.addEventListener("enter",ask_follow_up);
+                submit.addEventListener("click",ask_follow_up);
+              }
+              recursion();
               popup_message.textContent = title;
               popup.appendChild(out);
             }

@@ -11,6 +11,7 @@ interface GeminiAnalysis {
     sentences: GeminiSentences
     categories: GeminiCategories
     numerics: GeminiNumerics
+    follow_up: (prompt: string) => Promise<string>
 }
 
 interface GeminiSentences {
@@ -94,6 +95,9 @@ const analyze_video = async (data: VideoData): Promise<GeminiAnalysis> => {
             topics_covered: sentences[2],
             topic_phrase: sentences[3],
         },
+        follow_up: async (prompt: string): Promise<string> => {
+          return (await chat.sendMessage(["For the next prompt, please give a some detail and do not include markup or markdown information. Answer according to the video.", prompt])).response.text()
+        }
     };
 }
 
