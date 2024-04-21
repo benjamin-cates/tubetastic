@@ -5,7 +5,7 @@ module.exports = {
    mode: "development",
    entry: {
       foreground: path.resolve(__dirname, "src", "foreground.ts"),
-      inject_buttons: path.resolve(__dirname, "src", "inject_buttons.ts"),
+      inject_buttons: path.resolve(__dirname, "src", "inject_buttons.tsx"),
       contentScript: path.resolve(__dirname, "src", "contentScript.ts"),
       content: path.resolve(__dirname, "public", "content"),
       worker: path.resolve(__dirname, "src", "worker.ts"),
@@ -16,7 +16,7 @@ module.exports = {
       filename: "[name].js",
    },
    resolve: {
-      extensions: [".ts", ".js"],
+      extensions: [".ts", ".js", ".tsx"],
    },
    module: {
       rules: [

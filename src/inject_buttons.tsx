@@ -3,6 +3,9 @@ import { analyze_video } from "./gemini";
 import { getThumbnailUrl } from "./thumbnails";
 import VideoData from "./video_data";
 import { worker_comms } from "./worker_comms";
+import {  } from 'react-dom/client';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
 function injectButtons() {
   const videoContainers = document.querySelectorAll("#details, .details, div#meta");
@@ -18,32 +21,20 @@ function injectButtons() {
         return;
       }
       if (titleElement) {
-        const button = document.createElement("button");
-        button.innerText = "Analyze Video";
-        button.classList.add("analyze-video-button");
-        button.style.marginRight = "3px";
-        button.style.padding = "8.9673px";
-        button.style.border = "none";
-        // dark background and light text
-        button.style.background = "#295fc0";
-        button.style.color = "#FFFFFF";
-        button.style.cursor = "pointer";
-        button.style.fontSize = "1.2rem";
-        button.style.fontWeight = "bold";
-        button.style.borderRadius = "8px";
-        titleElement.parentNode!.insertBefore(button, titleElement.nextSibling);
-
-        button.addEventListener("click", (e: MouseEvent) => {
+        const on_click = ((event: React.MouseEvent) => {
+          const e = event;
           e.preventDefault();
           e.stopPropagation();
-          let anchor = ((e.target as HTMLElement).parentNode!.querySelector("a")) as HTMLAnchorElement;
-          if(!anchor) anchor = (e.target as HTMLElement).parentNode!.parentNode! as HTMLAnchorElement;
+          let anchor = ((e.target as HTMLElement).parentNode!.parentNode!.querySelector("a")) as HTMLAnchorElement;
+          if(!anchor) anchor = (e.target as HTMLElement).parentNode!.parentNode!.parentNode! as HTMLAnchorElement;
           const video_id = anchor.href.replace("https://www.youtube.com/watch?v=","");
           const title = titleElement!.parentElement!.querySelector("yt-formatted-string, span")!.textContent!;
           const author = container.querySelector("#channel-name")!.textContent!;
+          const rem_size = parseFloat(getComputedStyle(document.documentElement).fontSize);
+          const top = Math.max(Math.min(e.pageY-20*rem_size,(window.innerHeight+window.scrollY)-40*rem_size),window.scrollY) + "px";
+
           const popup = document.createElement("div");
           const popup_message = document.createElement("div");
-          const rem_size = parseFloat(getComputedStyle(document.documentElement).fontSize);
           popup.classList.add("yt_analyzer_popup");
           if(40*rem_size + e.pageX > window.innerWidth) {
             popup.style.right = (window.innerWidth - e.pageX) + "px";
@@ -51,7 +42,6 @@ function injectButtons() {
           else {
             popup.style.left = e.pageX + "px";
           }
-          popup.style.top = Math.max(Math.min(e.pageY-20*rem_size,(window.innerHeight+window.scrollY)-40*rem_size),window.scrollY) + "px";
           popup.style.background = "#222222";
           popup.style.color = "#FFFFFF";
           popup.style.fontSize = "1.8rem";
@@ -172,6 +162,10 @@ function injectButtons() {
 
 
         });
+        const button = <button className={"analyze-video-button"} style={{marginRight: "3px", padding: "8.9873px",border:"none", background:"#295fc0", color: "#FFF", cursor: "pointer", fontSize: "1.2rem", fontWeight: "bold", borderRadius: "8px"}} onClick={on_click}>Analyze Video</button>;
+        const root = document.createElement("div");
+        titleElement.parentNode!.insertBefore(root, titleElement.nextSibling);
+        ReactDOM.render(button, root);
       }
     }
   });
