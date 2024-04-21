@@ -8,15 +8,15 @@ function injectButtons() {
   const videoContainers = document.querySelectorAll("#details");
 
   videoContainers.forEach((container) => {
-    if (!container.querySelector(".clickbait-detector-button")) {
+    if (!container.querySelector(".analyze-video-button")) {
       const titleElement = container.querySelector("#video-title");
       if((container.parentNode!.parentNode! as HTMLElement).hasAttribute("is-short")) {
         return;
       }
       if (titleElement) {
         const button = document.createElement("button");
-        button.innerText = "Detect Clickbait";
-        button.classList.add("clickbait-detector-button");
+        button.innerText = "Analyze Video";
+        button.classList.add("analyze-video-button");
         button.style.marginRight = "3px";
         button.style.padding = "8.9673px";
         button.style.border = "none";
