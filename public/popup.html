@@ -16,8 +16,15 @@
       <header class="popup-header animate-bounce">
         <h1>YouTube Analyzer</h1>
       </header>
-      <div>Gemini API key: <input type="text" id="api_key" placeholder="API_KEY"/></div>
-      <div>Find a Gemini API key here: <a href="https://aistudio.google.com/app/apikey" target="_blank">Get API key</a></div>
+      <div>
+        Gemini API key: <input type="text" id="api_key" placeholder="API_KEY" />
+      </div>
+      <div>
+        Find a Gemini API key here:
+        <a href="https://aistudio.google.com/app/apikey" target="_blank"
+          >Get API key</a
+        >
+      </div>
       <div class="setting locked-in-mode">
         <label for="locked-in">Locked In Mode</label>
         <input type="checkbox" id="locked-in" />
@@ -55,14 +62,9 @@
           <label for="face-cam">Face Cam</label>
           <input type="checkbox" id="face-cam" checked />
         </div>
-        <div id="webcam-container"></div> <!-- Container for the webcam video -->
-        <div id="label-container"></div> <!-- Container for the model's predictions -->
       </div>
     </div>
     <script defer src="script.js"></script>
     <script defer src="content.js"></script>
-    <script defer src="extension_popup.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
   </body>
 </html>
