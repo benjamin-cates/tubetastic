@@ -1,9 +1,11 @@
 {
     "manifest_version": 3,
-    "name": "YT (Name)",
-    "description": "YouTube video analyzer",
-    "version": "0.0.1",
-    "icons": {},
+    "name": "YouTube Analyzer",
+    "description": "YouTube video analyzer and focus mode",
+    "version": "0.3.0",
+    "icons": {
+        "64": "img/icon64.png"
+    },
     "action": {
         "default_title": "YouTube Video Analyzer popup",
         "default_popup": "dist/popup.html"
@@ -14,7 +16,6 @@
         "webRequest",
         "cookies",
         "scripting"
-
     ],
     "host_permissions": [
         "https://*.youtube.com/*"
