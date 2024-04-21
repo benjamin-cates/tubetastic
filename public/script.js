@@ -120,7 +120,7 @@ function toggleFaceCam(isChecked) {
         }
       );
     } else {
-a      chrome.tabs.sendMessage(tabId, { action: "disableWebcam" });
+      chrome.tabs.sendMessage(tabId, { action: "disableWebcam" });
     }
   });
 }
