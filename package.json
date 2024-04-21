@@ -21,6 +21,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.17.6",
     "@google/generative-ai": "^0.7.1",
     "axios": "^1.6.8",
     "bun": "^1.1.4",
