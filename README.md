@@ -3,7 +3,7 @@
 TubeTastic is a project developed by [Priyansh Shah](https://github.com/Priyansh4444), [Benjamin Cates](https://github.com/benjamin-cates), [Leah Sun](https://github.com/leahs4), and [Tam Nyugen Minh](https://github.com/ball2004244) for submission at [LA Hacks 2024](https://la-hacks-2024.devpost.com/).
 
 ## DevPost
-[INSERT DEVPOST HERE]
+[INSERT DEVPOST HERE](https://devpost.com/software/tubetastic)
 
 
 
